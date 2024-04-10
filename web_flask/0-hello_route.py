@@ -1,6 +1,6 @@
 #!/usr/bin/python3
+""" Hakuna Matata """
 from flask import Flask
-"""Helllo """
 
 
 app = Flask(__name__)
