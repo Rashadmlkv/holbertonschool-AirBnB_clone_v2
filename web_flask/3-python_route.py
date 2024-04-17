@@ -20,6 +20,7 @@ def index3(text):
     return 'C {}'.format(text.replace('_', ' '))
 
 
+@app.route('/python', strict_slashes=False, defaults={'text': 'is cool'})
 @app.route('/python/<text>', strict_slashes=False)
 def index4(text):
     return 'Python {}'.format(text.replace('_', ' '))
