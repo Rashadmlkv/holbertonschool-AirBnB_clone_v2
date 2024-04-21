@@ -1,26 +1,34 @@
 #!/usr/bin/python3
-"""starts a Flask web application"""
-from flask import Flask
-from flask import render_template
+"""Python script that starts a Flask web application"""
+
+
+from flask import Flask, render_template
 from models import storage
 from models.state import State
+
 
 app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
-@app.route('/states/<state_id>', strict_slashes=False)
-def states(state_id=None):
-    states = storage.all(State)
-    if state_id is not None:
-        state_id = 'State.' + state_id
-    return render_template('9-states.html', states=states, state_id=state_id)
+@app.route('/states/<id>', strict_slashes=False)
+def states(id=None):
+    depo = storage.all(State)
+    if not id:
+        return render_template("7-states_list.html", depo=depo.values())
+    key = f'State.{id}'
+    state = None
+    try:
+        state = depo[key]
+    except KeyError:
+        pass
+    return render_template("9-states.html", state=state)
 
 
 @app.teardown_appcontext
-def teardown(self):
+def teardown(exc):
     storage.close()
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port=5000)

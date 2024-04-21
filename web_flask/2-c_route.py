@@ -1,23 +1,27 @@
 #!/usr/bin/python3
-"""starts a Flask web application"""
+"""Python script that starts a Flask web application"""
+
+
 from flask import Flask
+
 
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def index():
-    return "Hello HBNB!"
+def hello():
+    return f'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
-def index2():
-    return "HBNB"
+def hbnb():
+    return f'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def index3(text):
-    return 'C {}'.format(text.replace('_', ' '))
+def c(text):
+    text = text.replace("_", " ")
+    return f"C {text}"
 
 
 if __name__ == '__main__':

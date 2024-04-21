@@ -1,46 +1,51 @@
 #!/usr/bin/python3
-"""starts a Flask web application"""
-from flask import Flask
-from flask import render_template
+"""Python script that starts a Flask web application"""
+
+
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def index():
-    return "Hello HBNB!"
+def hello():
+    return f'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    return "HBNB"
+    return f'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def display_text(text):
-    return 'C {}'.format(text.replace('_', ' '))
+def c(text):
+    text = text.replace("_", " ")
+    return f"C {text}"
 
 
-@app.route('/python', strict_slashes=False, defaults={'text': 'is cool'})
+@app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def display_python(text):
-    return 'Python {}'.format(text.replace('_', ' '))
+def python(text="is cool"):
+    text = text.replace("_", " ")
+    return f"Python {text}"
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
-def display_int(n):
-    return '{}  is a number'.format(n)
+@app.route('/number/<int:n>')
+def number(n):
+    return f"{n} is a number"
 
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def display_template(n):
+@app.route('/number_template/<int:n>')
+def number_template(n):
     return render_template('5-number.html', n=n)
 
 
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def odd_or_even(n):
-    return render_template('6-number_odd_or_even.html', n=n)
+@app.route('/number_odd_or_even/<int:n>')
+def number_odd_or_even(n):
+    s = "even" if n % 2 == 0 else "odd"
+    return render_template('6-number_odd_or_even.html', n=n, state=s)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
